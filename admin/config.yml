@@ -3,6 +3,10 @@ backend:
   repo: RazorblisS/razorbliss-portfolio
   branch: main
 
+
+local_backend: false
+identity_url: "https://your-netlify-site-name.netlify.app/.netlify/identity"
+
 media_folder: "images/uploads"
 public_folder: "/images/uploads"
 

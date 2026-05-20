@@ -1,3 +1,8 @@
+Here is your main `index.html` file fully updated with the temporary Netlify site URL injection.
+
+Overwrite the `index.html` file in your root folder with this code, commit it to GitHub, and the Netlify identity handshake error will disappear on your live link.
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -232,6 +237,7 @@ body::before{
 @media(max-width:600px){.gallery-grid{columns:2!important}}
 @media(max-width:380px){.gallery-grid{columns:1!important}}
 </style>
+<script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
 </head>
 <body>
 
@@ -253,10 +259,8 @@ body::before{
 </header>
 
 <main class="gallery-section">
-  <div class="filter-bar" id="category-filters">
-    </div>
-  <div class="gallery-grid" id="gallery-container">
-    </div>
+  <div class="filter-bar" id="category-filters"></div>
+  <div class="gallery-grid" id="gallery-container"></div>
 </main>
 
 <footer class="site-footer">
@@ -377,7 +381,23 @@ document.getElementById('lb-close').onclick = () => {
   document.body.style.overflow = '';
 };
 
+// Handshake loop to redirect user to admin interface upon backend confirmation
+if (window.netlifyIdentity) {
+  window.netlifyIdentity.on("init", user => {
+    if (!user) {
+      window.netlifyIdentity.on("login", () => {
+        document.location.href = "/admin/";
+      });
+    }
+  });
+}
+
+// Route system anchor for local browser configurations
+localStorage.setItem("netlifySiteURL", "https://sparkling-puppy-85e40e.netlify.app");
+
 window.addEventListener('DOMContentLoaded', loadGalleryData);
 </script>
 </body>
 </html>
+
+```
